@@ -59,12 +59,26 @@ function build_plant(plant) {
     var getUrl = window.location;
     var currentUrl = getUrl.protocol + "//" + getUrl.host + "/"
     var src_html = document.getElementById('plant_card').outerHTML;
-    var html_plant = document.createElement('div')
-    html_plant.innerHTML = src_html
+    var html_plant = createElementFromHTML(src_html)
 
+    //set the plant img path
     plant_img = html_plant.getElementsByTagName('img')[0]
-    console.log(plant_img)
     plant_img.src = currentUrl + plant['img_path']
 
+    //set the plant information
+    title = html_plant.getElementsByTagName('h2')[0]
+    title.innerHTML = plant['name']
+
+    description = html_plant.getElementsByTagName('p')[0]
+    description.innerHTML = plant['notes']
+
+    html_plant.style.display = 'inline'
+
     return html_plant
+}
+
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+    return div.firstChild;
 }
