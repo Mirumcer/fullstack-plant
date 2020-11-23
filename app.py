@@ -7,6 +7,7 @@ from werkzeug.security import safe_str_cmp
 import os
 import uuid
 from flask_cors import CORS, cross_origin
+import datetime
 
 app = Flask(__name__)
 
@@ -28,6 +29,7 @@ def identity(payload):
 
 app.config['SECRET_KEY'] = 'This is a secret key!'
 
+app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(hours=48)
 jwt = JWT(app, authenticate, identity)
 
 #set the CORS headrer to allow all access
