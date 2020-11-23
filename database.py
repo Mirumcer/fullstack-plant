@@ -1,5 +1,5 @@
 import sqlite3
-from objects import User
+from objects import User, Plant
 
 DB_FILE = 'plant.db'
 
@@ -13,13 +13,13 @@ class model():
         try:
             cursor.execute("select count(rowid) from users")
         except sqlite3.OperationalError:
-            cursor.execute("create table users (user_id int primary key, username text UNIQUE, password text)")
+            cursor.execute("create table users (user_id integer primary key, username text UNIQUE, password text)")
         
         #make sure the plants table exists
         try:
             cursor.execute("select count(rowid) from plants")
         except sqlite3.OperationalError:
-            cursor.execute("create table plants (user_id int, name text, water_interval int, notes text, FOREIGN KEY(user_id) REFERENCES users(user_id))")
+            cursor.execute("create table plants (id integer primary key, user_id int, name text, water_interval int, days_until_water int, notes text, img_path, FOREIGN KEY(user_id) REFERENCES users(user_id))")
         cursor.close()
     
     def get_user_by_username(self, username):
@@ -29,6 +29,7 @@ class model():
         user = cursor.fetchall()
         if user:
             user = user[0]
+        cursor.close()
         return User(user[0], user[1], user[2])
     
     def get_user_by_id(self, user_id):
@@ -38,6 +39,7 @@ class model():
         user = cursor.fetchall()
         if user:
             user = user[0]
+        cursor.close()
         return User(user[0], user[1], user[2])
 
     def create_user(self, username, password):
@@ -48,8 +50,33 @@ class model():
             cursor.execute(sql)
         except:
             return False
+        connection.commit()
+        cursor.close()
         return True
 
+    def add_plant(self, user, plant):
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        sql = "INSERT INTO plants (user_id, name, water_interval, days_until_water, img_path, notes) VALUES (" +"\'"+  str(user.id) + "\'"+ "," + "\'" + plant.name + "\'"  + "," + "\'" + str(plant.water_interval) + "\'"+ "," + "\'" + str(plant.water_interval) + "\'"+ "," + "\'" + plant.img_path + "\'"+ "," + "\'" + plant.notes + "\'"+")"
+        try:
+            cursor.execute(sql)
+        except:
+            return False
 
-    def get_plants(self, user_id):
-        return {"name":"spider plant", "water_interval": 5}
+        connection.commit()
+        cursor.close()
+        return True
+
+    def get_plants(self, user):
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        sql = "SELECT * FROM plants WHERE user_id =" + str(user.id)
+        try:
+            cursor.execute(sql)
+        except:
+            return False
+        rows = cursor.fetchall()
+        plants = []
+        for plant in rows:
+            plants.append(Plant(id=plant[0], user_id=plant[1], name=plant[2], img_path=plant[6],water_interval=plant[3], days_until_water=plant[4], notes=plant[5]))
+        return plants
