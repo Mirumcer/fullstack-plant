@@ -6,6 +6,7 @@ from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 import os
 import uuid
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 
@@ -28,6 +29,9 @@ def identity(payload):
 app.config['SECRET_KEY'] = 'This is a secret key!'
 
 jwt = JWT(app, authenticate, identity)
+
+#set the CORS headrer to allow all access
+CORS(app, supports_credentials=True)
 
 @app.route('/new_user', methods=["POST"])
 def new_user():
