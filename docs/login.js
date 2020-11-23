@@ -26,7 +26,7 @@ $(document).ready(function() {
                 console.log("request complete ", data)
                 var jwt_token = data["access_token"]
                 console.log("jwt token:", jwt_token)
-                token = "JWT ".concat(jwt_token)
+                token = jwt_token
                 document.cookie = "jwt_token=".concat(token)
                 window.location.href = "dashboard.html"
             })
