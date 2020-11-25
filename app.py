@@ -83,7 +83,7 @@ def get_plants():
 
 @app.route('/feedback', methods=["POST"])
 def submit_feedback():
-    values = request.values
+    values = request.json
     name = values['name']
     email = values['email']
     message = values["message"]
