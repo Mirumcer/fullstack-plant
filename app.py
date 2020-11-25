@@ -81,6 +81,18 @@ def get_plants():
         all_plants.append(plant.__dict__)
     return jsonify(all_plants), 200
 
+@app.route('/feedback', methods=["POST"])
+def submit_feedback():
+    values = request.values
+    name = values['name']
+    email = values['email']
+    message = values["message"]
+    try:
+        db.add_feedback(name,email,message)
+    except:
+        return jsonify("there was an issue saving your feedback"), 500
+    return jsonify("success"), 200
+
 @app.route('/dashboard', methods=["GET"])
 @jwt_required()
 def dashboard():

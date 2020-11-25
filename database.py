@@ -20,6 +20,13 @@ class model():
             cursor.execute("select count(rowid) from plants")
         except sqlite3.OperationalError:
             cursor.execute("create table plants (id integer primary key, user_id int, name text, water_interval int, days_until_water int, notes text, img_path, FOREIGN KEY(user_id) REFERENCES users(user_id))")
+        
+        #make sure the user table exists
+        try:
+            cursor.execute("select count(rowid) from feedback")
+        except sqlite3.OperationalError:
+            cursor.execute("create table feedback (name text, email text, message text)")
+        
         cursor.close()
     
     def get_user_by_username(self, username):
@@ -80,3 +87,17 @@ class model():
         for plant in rows:
             plants.append(Plant(id=plant[0], user_id=plant[1], name=plant[2], img_path=plant[6],water_interval=plant[3], days_until_water=plant[4], notes=plant[5]))
         return plants
+
+    def add_feedback(self, name, email, message):
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        message = message.replace("\'","\'\'")
+        sql = "INSERT INTO feedback (name, email, message) VALUES (" +"\'"+  name + "\'"+ "," + "\'" + email + "\'"  + "," + "\'" + message + "\'"+")"
+        try:
+            cursor.execute(sql)
+        except:
+            return False
+
+        connection.commit()
+        cursor.close()
+        return True
