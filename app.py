@@ -8,10 +8,13 @@ import os
 import uuid
 from flask_cors import CORS, cross_origin
 import datetime
+import bcrypt
 
 app = Flask(__name__)
 
 db = database.model()
+
+salt = b'$2b$12$dQvFTcjXMlf6uz4INHgtXu'
 
 IMG_PATH = 'docs/images/user_plants'
 if not os.path.exists(IMG_PATH):
@@ -19,7 +22,8 @@ if not os.path.exists(IMG_PATH):
 
 def authenticate(username, password):
     user = db.get_user_by_username(username=username)
-    if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+    bcrypt.checkpw()
+    if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')): 
         return user
 
 def identity(payload):
@@ -38,7 +42,8 @@ CORS(app, supports_credentials=True)
 @app.route('/new_user', methods=["POST"])
 def new_user():
     credentials = request.get_json()
-    if db.create_user(credentials["username"],credentials["password"]):
+    hashword = bcrypt.hashpw(credentials['password'].encode('utf-8'), salt)
+    if db.create_user(credentials["username"],hashword.decode('utf-8')):
         return jsonify("Success"), 201
     return jsonify("Couldn't create user"), 500
 
