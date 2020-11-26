@@ -22,7 +22,6 @@ if not os.path.exists(IMG_PATH):
 
 def authenticate(username, password):
     user = db.get_user_by_username(username=username)
-    bcrypt.checkpw()
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')): 
         return user
 
