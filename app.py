@@ -8,10 +8,14 @@ import os
 import uuid
 from flask_cors import CORS, cross_origin
 import datetime
+import bcrypt
+from google.cloud import storage
 
 app = Flask(__name__)
 
 db = database.model()
+
+salt = b'$2b$12$dQvFTcjXMlf6uz4INHgtXu'
 
 IMG_PATH = 'docs/images/user_plants'
 if not os.path.exists(IMG_PATH):
@@ -19,7 +23,7 @@ if not os.path.exists(IMG_PATH):
 
 def authenticate(username, password):
     user = db.get_user_by_username(username=username)
-    if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+    if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')): 
         return user
 
 def identity(payload):
@@ -38,7 +42,8 @@ CORS(app, supports_credentials=True)
 @app.route('/new_user', methods=["POST"])
 def new_user():
     credentials = request.get_json()
-    if db.create_user(credentials["username"],credentials["password"]):
+    hashword = bcrypt.hashpw(credentials['password'].encode('utf-8'), salt)
+    if db.create_user(credentials["username"],hashword.decode('utf-8')):
         return jsonify("Success"), 201
     return jsonify("Couldn't create user"), 500
 
@@ -54,18 +59,22 @@ def add_img():
 @app.route('/plant', methods=["POST"])
 @jwt_required()
 def add_plant():
-    values = request.json
+    values = request.values
     name = values['name']
     description = values['desciption']
     water_interval = values["water_interval"]
     img = request.files['plant_img'].read()
 
     filename = str(uuid.uuid4()) + '.jpg'
-    filepath = os.path.join(IMG_PATH, filename)
-    with open(filepath, "wb") as fp:
-        fp.write(img)
+    img_url = 'https://storage.googleapis.com/webdev-final-279420.appspot.com/User_img/' + filename
     
-    new_plant = Plant(id=None,user_id=current_identity.id, name=name, img_path=str(filepath), water_interval=water_interval, days_until_water=water_interval, notes=description)
+    #upload img to storage 
+    storage_client = storage.Client()
+    bucket = storage_client.bucket('webdev-final-279420.appspot.com')
+    blob = bucket.blob('User_img/'+filename)
+    blob.upload_from_string(img, content_type='image/jpeg')
+
+    new_plant = Plant(id=None,user_id=current_identity.id, name=name, img_path=str(img_url), water_interval=water_interval, days_until_water=water_interval, notes=description)
     try:
         db.add_plant(current_identity, new_plant)
     except:
