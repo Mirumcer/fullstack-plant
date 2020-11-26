@@ -1,4 +1,4 @@
-const baseurl = "http://127.0.0.1:5000"
+const baseurl = "http://34.82.148.121:5000"
 
 
 $(document).ready(function() {

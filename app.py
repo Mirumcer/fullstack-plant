@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 import database
 from objects import User, Plant
 from flask_jwt import JWT, jwt_required, current_identity
