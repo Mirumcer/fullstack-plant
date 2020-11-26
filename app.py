@@ -9,6 +9,7 @@ import uuid
 from flask_cors import CORS, cross_origin
 import datetime
 import bcrypt
+from google.cloud import storage
 
 app = Flask(__name__)
 
@@ -58,18 +59,22 @@ def add_img():
 @app.route('/plant', methods=["POST"])
 @jwt_required()
 def add_plant():
-    values = request.json
+    values = request.values
     name = values['name']
     description = values['desciption']
     water_interval = values["water_interval"]
     img = request.files['plant_img'].read()
 
     filename = str(uuid.uuid4()) + '.jpg'
-    filepath = os.path.join(IMG_PATH, filename)
-    with open(filepath, "wb") as fp:
-        fp.write(img)
+    img_url = 'https://storage.googleapis.com/webdev-final-279420.appspot.com/User_img/' + filename
     
-    new_plant = Plant(id=None,user_id=current_identity.id, name=name, img_path=str(filepath), water_interval=water_interval, days_until_water=water_interval, notes=description)
+    #upload img to storage 
+    storage_client = storage.Client()
+    bucket = storage_client.bucket('webdev-final-279420.appspot.com')
+    blob = bucket.blob('User_img/'+filename)
+    blob.upload_from_string(img, content_type='image/jpeg')
+
+    new_plant = Plant(id=None,user_id=current_identity.id, name=name, img_path=str(img_url), water_interval=water_interval, days_until_water=water_interval, notes=description)
     try:
         db.add_plant(current_identity, new_plant)
     except:

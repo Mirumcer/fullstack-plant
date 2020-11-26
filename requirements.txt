@@ -3,3 +3,4 @@ Flask-JWT
 email-validator
 flask-cors
 bcrypt
+google-cloud-storage

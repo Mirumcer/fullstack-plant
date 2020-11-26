@@ -52,6 +52,7 @@ class model():
     def create_user(self, username, password):
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
+        
         sql = "INSERT INTO users (username, password) VALUES (" +"\'"+  username + "\'"+ "," + "\'" + password + "\'" + ")"
         try:
             cursor.execute(sql)

@@ -49,21 +49,17 @@ function display_plants(data) {
         console.log(data[plant])
         html_plant = build_plant(data[plant])
         plant_container.appendChild(html_plant)
-
-
     }
 }
 
 //Build the Plant document node
 function build_plant(plant) {
-    var getUrl = window.location;
-    var currentUrl = getUrl.protocol + "//" + getUrl.host + "/"
     var src_html = document.getElementById('plant_card').outerHTML;
     var html_plant = createElementFromHTML(src_html)
 
     //set the plant img path
     plant_img = html_plant.getElementsByTagName('img')[0]
-    plant_img.src = currentUrl + plant['img_path']
+    plant_img.src = plant['img_path']
 
     //set the plant information
     title = html_plant.getElementsByTagName('h2')[0]
