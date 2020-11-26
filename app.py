@@ -54,7 +54,7 @@ def add_img():
 @app.route('/plant', methods=["POST"])
 @jwt_required()
 def add_plant():
-    values = request.values
+    values = request.json
     name = values['name']
     description = values['desciption']
     water_interval = values["water_interval"]
