@@ -12,11 +12,14 @@ $(document).ready(function() {
     jwt_token = cookie.split('=')[1]
     console.log("jwt Cookie", jwt_token)
 
+
+
     //JWT is valid
     //get the plants and display them
     get_plants()
 })
 
+//request all the user's plants from the backend
 function get_plants() {
     const fetch_url = baseurl.concat("/plants")
 
@@ -34,6 +37,8 @@ function get_plants() {
             console.log("request complete ", data)
             if (res.ok) {
                 display_plants(data);
+            } else {
+                window.location.href = "login.html"
             }
 
         })
@@ -77,4 +82,8 @@ function createElementFromHTML(htmlString) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
     return div.firstChild;
+}
+
+function logout() {
+
 }
