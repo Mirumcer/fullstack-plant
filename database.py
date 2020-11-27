@@ -36,6 +36,8 @@ class model():
         user = cursor.fetchall()
         if user:
             user = user[0]
+        else:
+            return None
         cursor.close()
         return User(user[0], user[1], user[2])
     
