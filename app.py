@@ -9,6 +9,7 @@ from flask_cors import CORS, cross_origin
 import datetime
 import bcrypt
 from google.cloud import storage
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
@@ -19,6 +20,13 @@ salt = b'$2b$12$dQvFTcjXMlf6uz4INHgtXu'
 IMG_PATH = 'docs/images/user_plants'
 if not os.path.exists(IMG_PATH):
     os.makedirs(IMG_PATH)
+
+# initialize, add the sync job, and start the scheduler
+scheduler = BackgroundScheduler()
+sync_job = scheduler.add_job(db.increment_day, trigger="cron", hour=0)
+scheduler.start()
+db.increment_day()
+
 
 def authenticate(username, password):
     user = db.get_user_by_username(username=username)
