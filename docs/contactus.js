@@ -1,4 +1,4 @@
-const baseurl = "https://plant-dash-dev.ipq.co:5000"
+const baseurl = "http://127.0.0.1:5000"
 
 
 $(document).ready(function() {
@@ -24,7 +24,7 @@ $(document).ready(function() {
         }).then(res => {
             data = res.json().then(data => {
                 console.log("request complete ", data)
-                window.location.href = "contactus.html"
+                window.location.href = "feedback.html"
             })
 
         })
