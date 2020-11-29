@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="dashboard.js"></script>
     <script>
         new WOW().init();
     </script>
@@ -56,7 +57,7 @@
     </nav>
     </div>
     <div style="padding: 30px;">
-        <div class="container-fluid team-section">
+        <div id="plant_container" class="container-fluid team-section">
             <div class="container-fluid">
                 <div class="col-md-9">
                     <p style="letter-spacing: 2px; font-size: 45px;">Welcome Back!</p>
@@ -65,7 +66,7 @@
                     <a href="plantinfo.html"><button type="button" class="addplant">ADD PLANT</button></a>
                 </div>
             </div>
-            <div class="col-md-4" style="padding: 40px;">
+            <div id="plant_card" class="col-md-4" style="padding: 40px; display:none">
                 <div style="padding-right: 15px;">
                     <div class="team-member">
                         <img src="images/9.jpg" class="img-responsive" style="width: 100%">

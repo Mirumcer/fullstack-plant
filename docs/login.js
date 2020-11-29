@@ -24,7 +24,8 @@ $(document).ready(function() {
         }).then(res => {
             data = res.json().then(data => {
                 console.log("request complete ", data)
-                if (!data.ok) {
+                if (!res.ok) {
+                    console.log(res.ok)
                     var invalid_message = document.getElementById("invalid_message")
                     invalid_message.style.visibility = 'visible'
                     return
@@ -35,6 +36,7 @@ $(document).ready(function() {
                 document.cookie = "jwt_token=".concat(token)
                 window.location.href = "dashboard.html"
             })
+            event.preventDefault()
 
         })
         event.preventDefault()
