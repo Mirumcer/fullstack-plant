@@ -1,4 +1,4 @@
-const baseurl = "http://127.0.0.1:5000"
+const baseurl = "https://plant-dash-dev.ipq.co:5000"
 
 $(document).ready(function() {
     console.log("in dashboard.js")
