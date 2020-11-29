@@ -104,3 +104,19 @@ class model():
         connection.commit()
         cursor.close()
         return True
+    
+    def increment_day(self):
+        check_zero = "UPDATE plants SET days_until_water = water_interval WHERE days_until_water = 0"
+        decrement = "UPDATE plants SET days_until_water = days_until_water - 1 WHERE days_until_water >0"
+
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        try:
+            cursor.execute(check_zero)
+            cursor.execute(decrement)
+        except:
+            return False
+
+        connection.commit()
+        cursor.close()
+        return True
