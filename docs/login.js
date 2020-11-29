@@ -1,4 +1,4 @@
-const baseurl = "https://plant-dash-dev.ipq.co:5000"
+const baseurl = "http://127.0.0.1:5000"
 
 
 $(document).ready(function() {
@@ -24,6 +24,11 @@ $(document).ready(function() {
         }).then(res => {
             data = res.json().then(data => {
                 console.log("request complete ", data)
+                if (!data.ok) {
+                    var invalid_message = document.getElementById("invalid_message")
+                    invalid_message.style.visibility = 'visible'
+                    return
+                }
                 var jwt_token = data["access_token"]
                 console.log("jwt token:", jwt_token)
                 token = jwt_token
