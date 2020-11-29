@@ -31,7 +31,7 @@ $(document).ready(function() {
                 console.log("request complete ", data)
                 if (res.ok) {
                     console.log("submit complete", res.status)
-
+                    window.location.href = "dashboard.html"
                 }
 
             })

@@ -61,148 +61,175 @@
             
         </div>
         <div class="col-md-8">
-            <form id = "contactform"class="form main-2">
-              <h2 style="text-align: center;">PLANT INFORMATION</h2>
-              <div>
-              <label>Name of The Plant</label>
-              <p type="text"><input class="input" color = white placeholder="Enter the Plant name..."></input></p>
-              </div>
-              <div>
-                  <label>Description </label>
-                  <p type = "text"><input class = "input" color = white placeholder= "Describe Your Plant Needs...."></input></p>
-              </div>
-              <div>
-              <label>Water Interval</label>
-              <input type="number" class="quantity" name="quantity" min="0" max="24">
-              <style>
-                  .quantity {
-                      border: 2px solid whitesmoke;
-                        color:whitesmoke;
-                        background-color:gray;
-                        padding: 8px 20px;
-                        border-radius: 8px;
-                        font-size: 20px;
-                        font-weight: bold;
-                  }
-              </style>
-              </div>
-              <div>
-                <label>Upload Your Image</label>
-            </div>
-            <div>  
-                <div class="upload-btn-wrapper">
-                  <button id="imageupload" class="btn">Select Image</button>
-                  <input type="file" id="myfile" name="myfile" accept = "image/*"/>
+            <form id="contactform" class="form main-2">
+                <h2 style="text-align: center;">PLANT INFORMATION</h2>
+                <div>
+                    <label>Name of The Plant</label>
+                    <p type="text"><input name="name" id="name" class="input" color=w hite placeholder="Enter the Plant name..."></input>
+                    </p>
                 </div>
-                <style>
-                    .upload-btn-wrapper {
-                      position: relative;
-                      overflow: hidden;
-                      display: inline-block;
-                      }
-            
-                      .btn {
-                      border: 2px solid whitesmoke;
-                      color:whitesmoke;
-                      background-color:black;
-                      padding: 8px 20px;
-                      border-radius: 8px;
-                      font-size: 20px;
-                      font-weight: bold;
-                      }
-            
-                      .upload-btn-wrapper input[type=file] {
-                      font-size: 100px;
-                      position: absolute;
-                      left: 0;
-                      top: 0;
-                      opacity: 0;
-                      }
-                      </style>
-                      <script>
-                       document.addEventListener("DOMContentLoaded", function() {
-                      
-                      var labelFacture = document.getElementById('imageupload').innerHTML;
-                      
-                      document.getElementById('myfile').onchange = function () {
-                      
-                          var fullPath = this.value;
-                          if (fullPath) {
-                              var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-                              var filename = fullPath.substring(startIndex);
-                              if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                                  filename = filename.substring(1);
-                              }
-                              document.getElementById('imageupload').innerHTML = labelFacture + ' : ' + filename;
-            
-                          };
-                          
-                      };  
-                      
-                      });  
-                </script>
-            </div>
-              <div style="text-align: center; padding: 15px;">
-              <button class = "buttonbox"  type="button" id="btnFetch" class="spinner-button btn btn-primary mb-2" style="font-size: 13px; background-color: black;color: white; border: 2px solid whitesmoke; border-radius: 2px; font-stretch: condensed; padding: 7px;letter-spacing: 2px; padding-left: 16px; padding-right: 16px;">SUBMIT</button>
-            <style>
-                 body {
-                    background-color: #FAFAFA
-                }
+                <div>
+                    <label>Description </label>
+                    <p type="text"><input name="description" class="input" color=w hite placeholder="Describe Your Plant Needs...."></input>
+                    </p>
+                </div>
+                <div>
+                    <label>Water Interval</label>
+                    <input type="number" class="quantity" name="water_interval" min="0" max="24">
+                    <style>
+                        .quantity {
+                            border: 2px solid whitesmoke;
+                            color: whitesmoke;
+                            background-color: gray;
+                            padding: 8px 20px;
+                            border-radius: 8px;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                    </style>
+                </div>
+                <div>
+                    <label>Upload Your Image</label>
+                </div>
+                <div>
+                    <div class="upload-btn-wrapper">
+                        <button id="imageupload" class="btn">Select Image</button>
+                        <input type="file" id="myfile" name="plant_img" accept="image/*" />
+                    </div>
+                    <style>
+                        .upload-btn-wrapper {
+                            position: relative;
+                            overflow: hidden;
+                            display: inline-block;
+                        }
+                        
+                        .btn {
+                            border: 2px solid whitesmoke;
+                            color: whitesmoke;
+                            background-color: black;
+                            padding: 8px 20px;
+                            border-radius: 8px;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                        
+                        .upload-btn-wrapper input[type=file] {
+                            font-size: 100px;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            opacity: 0;
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
 
-                .buttonbox {
-                    position: absolute;
-                    transform: translate(-50%, -50%)
-                }
-                .spinner-button {
-                    border: 2px solid #000;
-                    display: inline-block;
-                    padding: 8px 20px 9px;
-                    font-size: 12px;
-                    color: #000;
-                    background-color: transparent
-                }
+                            var labelFacture = document.getElementById('imageupload').innerHTML;
 
-                .btn-primary:disabled {
-                    color: #fff;
-                    background-color: #000;
-                    border-color: #000
-                }
+                            document.getElementById('myfile').onchange = function() {
 
-                .spinner-button:hover {
-                    background-color: #000;
-                    border: 2px solid #000;
-                    color: #fff
-                }
+                                var fullPath = this.value;
+                                if (fullPath) {
+                                    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                                    var filename = fullPath.substring(startIndex);
+                                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                                        filename = filename.substring(1);
+                                    }
+                                    document.getElementById('imageupload').innerHTML = labelFacture + ' : ' + filename;
 
-                .spinner-button i {
-                    color: #fff
-                }
+                                };
 
-                .spinner-button:hover i {
-                    color: #fff
-                }
+                            };
 
-                .fa {
-                    color: #fff
-                }
+                        });
+                    </script>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <button class="buttonbox" type="submit" id="btnFetch" class="spinner-button btn btn-primary mb-2" style="font-size: 13px; background-color: black;color: white; border: 2px solid whitesmoke; border-radius: 2px; font-stretch: condensed; padding: 7px;letter-spacing: 2px; padding-left: 16px; padding-right: 16px;">SUBMIT</button>
+                    <style>
+                        body {
+                            background-color: #FAFAFA
+                        }
+                        
+                        .buttonbox {
+                            position: absolute;
+                            transform: translate(-50%, -50%)
+                        }
+                        
+                        .spinner-button {
+                            border: 2px solid #000;
+                            display: inline-block;
+                            padding: 8px 20px 9px;
+                            font-size: 12px;
+                            color: #000;
+                            background-color: transparent
+                        }
+                        
+                        .btn-primary:disabled {
+                            color: #fff;
+                            background-color: #000;
+                            border-color: #000
+                        }
+                        
+                        .spinner-button:hover {
+                            background-color: #000;
+                            border: 2px solid #000;
+                            color: #fff
+                        }
+                        
+                        .spinner-button i {
+                            color: #fff
+                        }
+                        
+                        .spinner-button:hover i {
+                            color: #fff
+                        }
+                        
+                        .fa {
+                            color: #fff
+                        }
+                        
+                        .fa:hover {
+                            color: #fff
+                        }
+                    </style>
+                    <script>
+                        $(document).ready(function() {
+                            $("#btnFetch").click(function() {
+                                // disable button
+                                $(this).prop("disabled", true);
+                                // add spinner to button
+                                $(this).html(
+                                    '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
+                                );
+                            });
+                        });
+                    </script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
 
-                .fa:hover {
-                    color: #fff
-                }
-            </style>
-            <script>
-                $(document).ready(function() {
-                $("#btnFetch").click(function() {
-                // disable button
-                $(this).prop("disabled", true);
-                // add spinner to button
-                $(this).html(
-                '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
-                );
-                });
-                });
-            </script>
-            </div>
+                            var labelFacture = document.getElementById('imageupload').innerHTML;
+
+                            document.getElementById('myfile').onchange = function() {
+
+                                var fullPath = this.value;
+                                if (fullPath) {
+                                    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                                    var filename = fullPath.substring(startIndex);
+                                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                                        filename = filename.substring(1);
+                                    }
+                                    document.getElementById('imageupload').innerHTML = labelFacture + ' : ' + filename;
+
+                                };
+
+                            };
+
+                        });
+                    </script>
+                </div>
+
+        </div>
         <div class="col-md-2">
             
         </div>
