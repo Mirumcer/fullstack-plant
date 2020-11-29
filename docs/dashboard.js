@@ -73,7 +73,8 @@ function build_plant(plant) {
     description = html_plant.getElementsByTagName('p')[0]
     description.innerHTML = plant['notes']
     if (plant['days_until_water'] == 0) {
-        //add "water me" label
+        var label = html_plant.getElementsByTagName('h2')[1]
+        label.style.display = 'inline'
     }
 
     html_plant.style.display = 'inline'
