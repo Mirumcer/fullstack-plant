@@ -11,6 +11,15 @@ $(document).ready(function() {
     jwt_token = cookie.split('=')[1]
     console.log("jwt Cookie", jwt_token)
 
+    $("#btnFetch").click(function() {
+        // disable button
+        //$(this).prop("disabled", true);
+        // add spinner to button
+        $(this).html(
+            '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
+        );
+    });
+
     document.getElementById('contactform').addEventListener("submit", function(event) {
         const fetch_url = baseurl.concat("/plant")
         var name = $('#name').val()
@@ -32,6 +41,7 @@ $(document).ready(function() {
                 if (res.ok) {
                     console.log("submit complete", res.status)
                     window.location.href = "dashboard.html"
+
                 }
 
             })
