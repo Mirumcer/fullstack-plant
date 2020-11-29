@@ -60,7 +60,7 @@ def add_img():
 def add_plant():
     values = request.values
     name = values['name']
-    description = values['desciption']
+    description = values['description']
     water_interval = values["water_interval"]
     img = request.files['plant_img'].read()
 
