@@ -146,117 +146,90 @@
                     </script>
                 </div>
                 <div style="text-align: center; padding: 15px;">
-                    <button style="font-size: 13px; background-color: black;color: white; border: 2px solid whitesmoke; font-stretch: condensed; padding: 7px;letter-spacing: 2px; padding-left: 16px; padding-right: 16px;">SUBMIT</button>
-                </div>
-                <style>
-                    .upload-btn-wrapper {
-                        position: relative;
-                        overflow: hidden;
-                        display: inline-block;
-                    }
-                    
-                    .btn {
-                        border: 2px solid whitesmoke;
-                        color: whitesmoke;
-                        background-color: black;
-                        padding: 8px 20px;
-                        border-radius: 8px;
-                        font-size: 20px;
-                        font-weight: bold;
-                    }
-                    
-                    .upload-btn-wrapper input[type=file] {
-                        font-size: 100px;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        opacity: 0;
-                    }
-                </style>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
+                    <button class="buttonbox" type="submit" id="btnFetch" class="spinner-button btn btn-primary mb-2" style="font-size: 13px; background-color: black;color: white; border: 2px solid whitesmoke; border-radius: 2px; font-stretch: condensed; padding: 7px;letter-spacing: 2px; padding-left: 16px; padding-right: 16px;">SUBMIT</button>
+                    <style>
+                        body {
+                            background-color: #FAFAFA
+                        }
+                        
+                        .buttonbox {
+                            position: absolute;
+                            transform: translate(-50%, -50%)
+                        }
+                        
+                        .spinner-button {
+                            border: 2px solid #000;
+                            display: inline-block;
+                            padding: 8px 20px 9px;
+                            font-size: 12px;
+                            color: #000;
+                            background-color: transparent
+                        }
+                        
+                        .btn-primary:disabled {
+                            color: #fff;
+                            background-color: #000;
+                            border-color: #000
+                        }
+                        
+                        .spinner-button:hover {
+                            background-color: #000;
+                            border: 2px solid #000;
+                            color: #fff
+                        }
+                        
+                        .spinner-button i {
+                            color: #fff
+                        }
+                        
+                        .spinner-button:hover i {
+                            color: #fff
+                        }
+                        
+                        .fa {
+                            color: #fff
+                        }
+                        
+                        .fa:hover {
+                            color: #fff
+                        }
+                    </style>
+                    <script>
+                        $(document).ready(function() {
+                            $("#btnFetch").click(function() {
+                                // disable button
+                                $(this).prop("disabled", true);
+                                // add spinner to button
+                                $(this).html(
+                                    '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
+                                );
+                            });
+                        });
+                    </script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
 
-                        var labelFacture = document.getElementById('imageupload').innerHTML;
+                            var labelFacture = document.getElementById('imageupload').innerHTML;
 
-                        document.getElementById('myfile').onchange = function() {
+                            document.getElementById('myfile').onchange = function() {
 
-                            var fullPath = this.value;
-                            if (fullPath) {
-                                var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-                                var filename = fullPath.substring(startIndex);
-                                if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                                    filename = filename.substring(1);
-                                }
-                                document.getElementById('imageupload').innerHTML = labelFacture + ' : ' + filename;
+                                var fullPath = this.value;
+                                if (fullPath) {
+                                    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                                    var filename = fullPath.substring(startIndex);
+                                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                                        filename = filename.substring(1);
+                                    }
+                                    document.getElementById('imageupload').innerHTML = labelFacture + ' : ' + filename;
+
+                                };
 
                             };
 
-                        };
+                        });
+                    </script>
+                </div>
 
-                    });
-                </script>
-        </div>
-        <div style="text-align: center; padding: 15px;">
-            <button class="buttonbox" type="button" id="btnFetch" class="spinner-button btn btn-primary mb-2" style="font-size: 13px; background-color: black;color: white; border: 2px solid whitesmoke; border-radius: 2px; font-stretch: condensed; padding: 7px;letter-spacing: 2px; padding-left: 16px; padding-right: 16px;">SUBMIT</button>
-            <style>
-                body {
-                    background-color: #FAFAFA
-                }
-                
-                .buttonbox {
-                    position: absolute;
-                    transform: translate(-50%, -50%)
-                }
-                
-                .spinner-button {
-                    border: 2px solid #000;
-                    display: inline-block;
-                    padding: 8px 20px 9px;
-                    font-size: 12px;
-                    color: #000;
-                    background-color: transparent
-                }
-                
-                .btn-primary:disabled {
-                    color: #fff;
-                    background-color: #000;
-                    border-color: #000
-                }
-                
-                .spinner-button:hover {
-                    background-color: #000;
-                    border: 2px solid #000;
-                    color: #fff
-                }
-                
-                .spinner-button i {
-                    color: #fff
-                }
-                
-                .spinner-button:hover i {
-                    color: #fff
-                }
-                
-                .fa {
-                    color: #fff
-                }
-                
-                .fa:hover {
-                    color: #fff
-                }
-            </style>
-            <script>
-                $(document).ready(function() {
-                    $("#btnFetch").click(function() {
-                        // disable button
-                        $(this).prop("disabled", true);
-                        // add spinner to button
-                        $(this).html(
-                            '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
-                        );
-                    });
-                });
-            </script>
         </div>
         <div class="col-md-2">
 
