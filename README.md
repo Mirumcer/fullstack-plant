@@ -14,7 +14,7 @@ returns a JWT
 }
 returns a JSON object with all the user's plants
 
-#### POST /plant
+### POST /plant
 submit a form with name, description, water_interval, and img
 
 ### POST /new_user
