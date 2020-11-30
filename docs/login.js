@@ -7,13 +7,10 @@ $(document).ready(function() {
     loginform.addEventListener("submit", function(event) {
         console.log("submit processing")
         formData = $(myform).serializeArray()
-        console.log(formData);
         const plant_url = baseurl.concat("/auth")
         formData = { "username": formData[0].value, "password": formData[1].value }
 
-        console.log(formData)
         formData = JSON.stringify(formData)
-        console.log(formData)
 
         fetch(plant_url, {
             method: "post",

@@ -11,9 +11,7 @@ $(document).ready(function() {
         const plant_url = baseurl.concat("/new_user")
         formData = { "username": formData[0].value, "password": formData[1].value }
 
-        console.log(formData)
         formData = JSON.stringify(formData)
-        console.log(formData)
 
         fetch(plant_url, {
             method: "post",
